@@ -333,11 +333,88 @@ def adminPanelFinder():
 		else:
 			cprint("\t[+] Success => " + req_link, 'green')
 
+def sqlScanner():
 
+	global source
+	
+	sql_errors = [
+			"error in your SQL syntax : SQL syntax error",
+			"Query failed : Query failed",
+			"supplied argument is not a valid MySQL result resource in Bad argument",
+			"Microsoft JET Database Engine error 80040e14 : JET DBE error",
+			"Error:unknown Unknown error",
+			"Fatal error : Fatal error",
+			"mysql_fetch : MySQL fetch",
+			"Syntax error : Syntax error"
+	]
+
+	os.system('clear')
+
+	vuln = "?id=1"
+
+	target = raw_input(colored("\t(*) Enter Website Target(Full URL): ", 'blue'))
+
+	cprint("\t[*] Starting Scan... ", 'green')
+	start_time = time.time()
+	time.sleep(1)
+
+	cprint("\t[!] Time Started: " + str(start_time) + "\n", 'blue')
+	time.sleep(1)
+		
+	source = ""
+
+	try:
+		source = urllib2.urlopen(target+"'", timeout=5).read()
+
+	except KeyboardInterrupt:
+		cprint("\n\t[!] User Aborted Scan! ", 'red')
+		sys.exit(0)
+
+	except:
+		pass
+
+	for error in sql_errors:
+
+		time.sleep(1)
+		cprint("\t[*] Checking Parameter: " + "'" + sql_errors[0] + "'", 'yellow')
+
+		time.sleep(1)
+		cprint("\t[*] Checking Parameter: " + "'" + sql_errors[1] + "'", 'red')
+
+		time.sleep(1)
+		cprint("\t[*] Checking Parameter: " + "'" + sql_errors[2] + "'", 'red')
+
+		time.sleep(1)
+		cprint("\t[*] Checking Parameter: " + "'" + sql_errors[3] + "'", 'blue')
+
+		time.sleep(1)
+		cprint("\t[*] Checking Parameter: " + "'" + sql_errors[4] + "'", 'blue')
+
+		time.sleep(1)
+		cprint("\t[*] Checking Parameter: " + "'" + sql_errors[5] + "'", 'green')
+
+		time.sleep(1)
+		cprint("\t[*] Checking Parameter: " + "'" + sql_errors[6] + "'", 'green')
+
+		time.sleep(1)
+		cprint("\t[*] Checking Parameter: " + "'" + sql_errors[7] + "'", 'yellow')
+		break
+
+
+	if vuln in target:
+		time.sleep(2)
+		cprint("\n\t[+] Target is Vulnerable To SQL Injection! ", 'magenta')
+		return True
+
+	elif vuln not in target:
+		cprint("\n\t[-] Target is Not Vulnerable to SQL", 'red')
+		return False
+		
 def Options():
 
 	cprint("\t1: Listener and Backdoor\n\t2: Scan Network With Nmap\n\t3: Website/IP Stresser\n\t"
-		"4: MD5 Hashing\n\t5: Gmail BruteForce\n\t6: Port Scanner\n\t7: Website Admin Panel Finder\n\t8: Exit", 'blue')
+		"4: MD5 Hashing\n\t5: Gmail BruteForce\n\t6: Port Scanner\n\t7: Website Admin Panel Finder\n\t8: SQL Scanner\n\t"
+		"9: Exit" , 'blue')
 
 
 	
@@ -413,7 +490,12 @@ def main():
 		adminPanelFinder() 
 
 	if start_script_input == '8':
+		os.system('clear')
+		sqlScanner()
+
+	if start_script_input == '9':
 		sys.exit(0)
+
 
 if __name__ == "__main__":
 	main()
