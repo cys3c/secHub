@@ -2,7 +2,7 @@
 				Welcome to SecHub
 				------------------
 	SecHub is an Open Source Security Tool Kit developed for Pen-Testers,
-Hackers, and Security Reasearches. This tool was developed by Josh,
+Hackers, and Security Researchers. This tool was developed by Josh,
 (Yeh, just Josh).
 
 	This peice of Software is meant to be used for educational purposes only.
